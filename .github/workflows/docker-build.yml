@@ -1,0 +1,41 @@
+name: Build and Push Docker Image
+
+# Trigger this workflow every time you push to main
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    # Grant permission to push to GitHub Container Registry
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      # Step 1: Check out the repo so the workflow can access the Dockerfile
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 2: Log in to GitHub Container Registry (ghcr.io).
+      # GITHUB_TOKEN is automatically provided by GitHub Actions — no secrets to set up.
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Step 3: Build and push the image to ghcr.io.
+      # Your image will be at: ghcr.io/gordofreemo/smollm3-train:ver1
+      # Bump the tag (ver1 → ver2) when you change dependencies so the cluster
+      # pulls the fresh image rather than using its cached copy.
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/gordofreemo/smollm3-train:ver1
