@@ -7,7 +7,7 @@
 # mounts them into the container's working directory automatically.
 # The image only needs to contain the *environment* — Python packages and system libs.
 # This means you can update your training code without rebuilding the image.
-FROM pytorch/pytorch:2.3.1-cuda12.1-cudnn8-runtime
+FROM pytorch/pytorch:2.5.1-cuda12.4-cudnn9-runtime
 
 # Set the working directory inside the container.
 # Condor will mount your transferred files here when the job runs.
