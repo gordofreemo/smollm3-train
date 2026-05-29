@@ -38,4 +38,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/gordofreemo/smollm3-train:ver2
+          tags: ghcr.io/gordofreemo/smollm3-train:ver3
